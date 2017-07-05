@@ -16,8 +16,8 @@ public class Scanner implements AutoCloseable {
     private MatchResult result;
     private String line;
 
-    public Scanner(String regex, Reader reader) {
-        matcher = Pattern.compile(regex).matcher("");
+    public Scanner(Pattern regEx, Reader reader) {
+        matcher = regEx.matcher("");
         result = Pattern.compile("").matcher("").toMatchResult();
         bufferedReader = new BufferedReader(reader);
     }
@@ -35,7 +35,7 @@ public class Scanner implements AutoCloseable {
         }
     }
 
-    private boolean hasNext() throws IOException {
+    public boolean hasNext() throws IOException {
         if (matcher.regionStart() == matcher.regionEnd()) {
             line = bufferedReader.readLine();
             if (line == null) {
@@ -57,6 +57,14 @@ public class Scanner implements AutoCloseable {
             matcher.region(matcher.regionEnd(), matcher.regionEnd());
         }
         return skipped;
+    }
+
+    public String group() {
+        return result.group();
+    }
+
+    public String group(int group) {
+        return result.group(group);
     }
 
     @Override
