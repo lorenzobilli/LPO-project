@@ -28,7 +28,7 @@ public class Tokenizer implements AutoCloseable {
         final Pattern identRegEx = Pattern.compile("([a-zA-Z][a-zA-Z0-9]*)");
         final Pattern numRegEx = Pattern.compile("(0|[1-9][0-9]*|0[1-7][0-7]*)");
         final Pattern skipRegEx = Pattern.compile("(\\s+|//.*)");
-        final Pattern symbolRegEx = Pattern.compile("\\+|-|\\*|/|=|@|\\(|\\)|\\[|]|\\{|}|,|;");
+        final Pattern symbolRegEx = Pattern.compile("\\+|-|\\*|/|=|@|&&|\\|\\||!|==|<|\\(|\\)|\\[|]|\\{|}|,|;");
         regEx = Pattern.compile(identRegEx + "|" + numRegEx + "|" + skipRegEx + "|" + symbolRegEx);
     }
 
@@ -58,7 +58,11 @@ public class Tokenizer implements AutoCloseable {
         symbols.put("/", FRACTION);
         symbols.put("=", ASSIGN);
         symbols.put("@", CONCATENATE);
+        symbols.put("&&", AND);
+        symbols.put("||", OR);
         symbols.put("!", NOT);
+        symbols.put("==", EQUAL);
+        symbols.put("<", LESSTHAN);
         symbols.put("(", PARENTHESIS_OPEN);
         symbols.put(")", PARENTHESIS_CLOSED);
         symbols.put("[", BRACKETS_OPEN);

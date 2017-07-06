@@ -24,7 +24,11 @@ public enum TokenType {
     FRACTION,               // /
     ASSIGN,                 // =
     CONCATENATE,            // @
+    AND,                    // &&
+    OR,                     // ||
     NOT,                    // !
+    EQUAL,                  // ==
+    LESSTHAN,               // <
     OPPOSITE,               // -
     PARENTHESIS_OPEN,       // (
     PARENTHESIS_CLOSED,     // )
