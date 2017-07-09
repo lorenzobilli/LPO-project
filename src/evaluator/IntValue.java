@@ -3,7 +3,7 @@ package evaluator;
 /**
  * IntValue class
  */
-public class IntValue extends PrimaryValue<Integer> {
+public class IntValue extends PrimitiveValue<Integer> {
 
     public IntValue(Integer value) {
         super(value);

@@ -3,13 +3,13 @@ package evaluator;
 import static java.util.Objects.requireNonNull;
 
 /**
- * PrimaryValue class
+ * PrimitiveValue class
  */
-public abstract class PrimaryValue<T> implements Value {
+public abstract class PrimitiveValue<T> implements Value {
 
     protected T value;
 
-    protected PrimaryValue(T value) {
+    protected PrimitiveValue(T value) {
         this.value = requireNonNull(value);
     }
 

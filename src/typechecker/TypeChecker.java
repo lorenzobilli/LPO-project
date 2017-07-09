@@ -4,8 +4,8 @@ import common.Environment;
 import common.Visitor;
 import common.ast.*;
 
-import static typechecker.PrimaryType.BOOL;
-import static typechecker.PrimaryType.INT;
+import static typechecker.PrimitiveType.BOOL;
+import static typechecker.PrimitiveType.INT;
 
 /**
  * TypeChecker class

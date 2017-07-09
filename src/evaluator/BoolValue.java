@@ -3,7 +3,7 @@ package evaluator;
 /**
  * BoolValue class
  */
-public class BoolValue extends PrimaryValue<Boolean> {
+public class BoolValue extends PrimitiveValue<Boolean> {
 
     public BoolValue(Boolean value) {
         super(value);
