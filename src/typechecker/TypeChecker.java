@@ -8,9 +8,9 @@ import static typechecker.PrimaryType.BOOL;
 import static typechecker.PrimaryType.INT;
 
 /**
- * Typechecker class
+ * TypeChecker class
  */
-public class Typechecker implements Visitor<Type> {
+public class TypeChecker implements Visitor<Type> {
 
     private final Environment<Type> staticEnvironment = new Environment<>();
 

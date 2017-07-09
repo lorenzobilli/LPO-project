@@ -5,16 +5,16 @@ package typechecker;
  */
 public interface Type {
 
-    default Type checkEqual(Type expected) throws TypecheckerException {
+    default Type checkEqual(Type expected) throws TypeCheckerException {
         if (!equals(expected)) {
-            throw new TypecheckerException(toString(), expected.toString());
+            throw new TypeCheckerException(toString(), expected.toString());
         }
         return this;
     }
 
-    default Type checkList() throws TypecheckerException {
+    default Type checkList() throws TypeCheckerException {
         if (!(this instanceof ListType)) {
-            throw new TypecheckerException(toString(), ListType.LIST);
+            throw new TypeCheckerException(toString(), ListType.LIST);
         }
         return ((ListType) this).getListType();
     }

@@ -1,7 +1,7 @@
 package common;
 
 import common.ast.Identity;
-import typechecker.TypecheckerException;
+import typechecker.TypeCheckerException;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,11 +29,11 @@ public class Environment<T> {
         localEnvironments.remove(0);
     }
 
-    public T lookup(Identity identity) throws TypecheckerException {
+    public T lookup(Identity identity) throws TypeCheckerException {
         return resolve(identity).get(identity);
     }
 
-    public T update(Identity identity, T value) throws TypecheckerException {
+    public T update(Identity identity, T value) throws TypeCheckerException {
         return put(resolve(identity), identity, value);
     }
 
@@ -46,13 +46,13 @@ public class Environment<T> {
         return map.put(requireNonNull(identity), requireNonNull(value));
     }
 
-    protected Map<Identity, T> resolve(Identity identity) throws TypecheckerException {
+    protected Map<Identity, T> resolve(Identity identity) throws TypeCheckerException {
         for (Map<Identity, T> localEnvironment : localEnvironments) {
             if (localEnvironment.containsKey(identity)) {
                 return localEnvironment;
             }
         }
-        throw new TypecheckerException("Undeclared variable " + identity.getName());
+        throw new TypeCheckerException("Undeclared variable " + identity.getName());
     }
 
 }
