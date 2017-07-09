@@ -1,6 +1,7 @@
 package interpreter;
 
 import common.ast.Prog;
+import evaluator.Evaluator;
 import parser.Parser;
 import parser.ScannerException;
 import parser.Tokenizer;
@@ -50,6 +51,7 @@ public class Interpreter {
             System.out.println("Program correctly parsed: " + program);
             program.accept(new TypeChecker());
             System.out.println("Program statically correct");
+            program.accept(new Evaluator());
         } catch (ScannerException e) {
             String skipped = e.getSkipped();
             if (skipped != null) {
