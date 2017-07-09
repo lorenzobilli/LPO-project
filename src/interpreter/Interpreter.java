@@ -1,5 +1,10 @@
 package interpreter;
 
+import common.ast.Prog;
+import parser.Parser;
+import parser.ScannerException;
+import parser.Tokenizer;
+
 import java.io.*;
 
 /**
@@ -37,6 +42,24 @@ public class Interpreter {
     }
 
     private static void interactive() {
+        System.out.print(prompt);
+        try (Tokenizer tokenizer = new Tokenizer(new InputStreamReader(System.in))) {
+            Parser parser = new Parser(tokenizer);
+            Prog program = parser.parseProgram();
+            System.out.println("Program correctly parsed: " + program);
+        } catch (ScannerException e) {
+            String skipped = e.getSkipped();
+            if (skipped != null) {
+                System.err.println(e.getMessage() + e.getSkipped());
+            } else {
+                System.err.println(e.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private static void _interactive() {
         inputReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print(prompt);
         try {
