@@ -25,10 +25,15 @@ public class Tokenizer implements AutoCloseable {
     private int intValue;
 
     static {
+        // Group number 1: regular expression for identities
         final Pattern identRegEx = Pattern.compile("([a-zA-Z][a-zA-Z0-9]*)");
+        // Group number 2: regular expression for numbers
         final Pattern numRegEx = Pattern.compile("(0|[1-9][0-9]*|0[1-7][0-7]*)");
+        // Group number 3: regular expression for skipped characters
         final Pattern skipRegEx = Pattern.compile("(\\s+|//.*)");
+        // Group number 4: regular expression for symbols
         final Pattern symbolRegEx = Pattern.compile("\\+|-|\\*|/|=|@|&&|\\|\\||!|==|<|\\(|\\)|\\[|]|\\{|}|,|;");
+
         regEx = Pattern.compile(identRegEx + "|" + numRegEx + "|" + skipRegEx + "|" + symbolRegEx);
     }
 
@@ -79,8 +84,8 @@ public class Tokenizer implements AutoCloseable {
 
     private void checkType() {
         tokenString = scanner.group();
-        // Searching for IDENT, BOOL or keywords
-        if (scanner.group(IDENT.ordinal()) != null) {
+        // Searching for IDENT, BOOL or keywords inside group 2
+        if (scanner.group(1) != null) {
             tokenType = keywords.get(tokenString);
             if (tokenType == null) {
                 tokenType = IDENT;
@@ -90,18 +95,18 @@ public class Tokenizer implements AutoCloseable {
             }
             return;
         }
-        // Searching for NUM
-        if (scanner.group(NUM.ordinal()) != null) {
+        // Searching for NUM tokens inside group 2
+        if (scanner.group(2) != null) {
             tokenType = NUM;
             intValue = Integer.parseInt(tokenString);
             return;
         }
-        // SKIP token
-        if (scanner.group(SKIP.ordinal()) != null) {
+        // Searching for SKIP tokens inside group 3
+        if (scanner.group(3) != null) {
             tokenType = SKIP;
             return;
         }
-        // Only symbols are left...
+        // Only symbols are left (group 4), so token should be a symbol...
         tokenType = symbols.get(tokenString);
         if (tokenType == null) {
             throw new AssertionError("Unrecognised token");     //TODO: Consider a TokenizerException
@@ -152,10 +157,6 @@ public class Tokenizer implements AutoCloseable {
     public TokenType getTokenType() {
         checkValidToken();
         return tokenType;
-    }
-
-    public boolean hasNext() {
-        return hasNext;
     }
 
     @Override
