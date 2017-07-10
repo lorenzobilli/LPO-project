@@ -68,13 +68,13 @@ public class Tokenizer implements AutoCloseable {
         symbols.put("!", NOT);
         symbols.put("==", EQUAL);
         symbols.put("<", LESSTHAN);
-        symbols.put("(", PARENTHESIS_OPEN);
-        symbols.put(")", PARENTHESIS_CLOSED);
-        symbols.put("[", BRACKETS_OPEN);
-        symbols.put("]", BRACKETS_CLOSED);
-        symbols.put("{", BRACES_OPEN);
-        symbols.put("}", BRACES_CLOSED);
-        symbols.put(",", COMMA);
+        symbols.put("(", OPEN_PAR);
+        symbols.put(")", CLOSED_PAR);
+        symbols.put("[", START_LIST);
+        symbols.put("]", END_LIST);
+        symbols.put("{", START_BLOCK);
+        symbols.put("}", END_BLOCK);
+        symbols.put(",", EXPRESSION_SEP);
         symbols.put(";", STATEMENT_SEP);
     }
 

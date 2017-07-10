@@ -14,8 +14,11 @@ public interface Visitor<T> {
     T visitAnd(Expression left, Expression right);
     T visitEqual(Expression left, Expression right);
     T visitLessThan(Expression left, Expression right);
+    T visitConcatenate(Expression left, Expression right);
     T visitAdd(Expression left, Expression right);
+    T visitSubtract(Expression left, Expression right);
     T visitMultiply(Expression left, Expression right);
+    T visitDivide(Expression left, Expression right);
     T visitIntegerLiteral(int value);
     T visitBooleanLiteral(boolean value);
     T visitIdentity(String name);

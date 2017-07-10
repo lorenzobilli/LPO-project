@@ -63,15 +63,30 @@ public class TypeChecker implements Visitor<Type> {
     }
 
     @Override
+    public Type visitConcatenate(Expression left, Expression right) {
+        return null;
+    }
+
+    @Override
     public Type visitAdd(Expression left, Expression right) {
         checkBinaryOperator(left, right, INT);
         return INT;
     }
 
     @Override
+    public Type visitSubtract(Expression left, Expression right) {
+        return null;
+    }
+
+    @Override
     public Type visitMultiply(Expression left, Expression right) {
         checkBinaryOperator(left, right, INT);
         return INT;
+    }
+
+    @Override
+    public Type visitDivide(Expression left, Expression right) {
+        return null;
     }
 
     @Override

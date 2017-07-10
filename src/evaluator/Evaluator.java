@@ -55,13 +55,28 @@ public class Evaluator implements Visitor<Value> {
     }
 
     @Override
+    public Value visitConcatenate(Expression left, Expression right) {
+        return null;
+    }
+
+    @Override
     public Value visitAdd(Expression left, Expression right) {
         return new IntValue(left.accept(this).asInt() + right.accept(this).asInt());
     }
 
     @Override
+    public Value visitSubtract(Expression left, Expression right) {
+        return null;
+    }
+
+    @Override
     public Value visitMultiply(Expression left, Expression right) {
         return new IntValue(left.accept(this).asInt() * right.accept(this).asInt());
+    }
+
+    @Override
+    public Value visitDivide(Expression left, Expression right) {
+        return null;
     }
 
     @Override

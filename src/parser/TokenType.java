@@ -29,14 +29,14 @@ public enum TokenType {
     NOT,                    // !
     EQUAL,                  // ==
     LESSTHAN,               // <
-    OPPOSITE,               // -
-    PARENTHESIS_OPEN,       // (
-    PARENTHESIS_CLOSED,     // )
-    BRACKETS_OPEN,          // [
-    BRACKETS_CLOSED,        // ]
-    BRACES_OPEN,            // {
-    BRACES_CLOSED,          // }
-    COMMA,                  // ,
+    SIGN,                   // -
+    OPEN_PAR,               // (
+    CLOSED_PAR,             // )
+    START_LIST,             // [
+    END_LIST,               // ]
+    START_BLOCK,            // {
+    END_BLOCK,              // }
+    EXPRESSION_SEP,         // ,
     STATEMENT_SEP,          // ;
     NUM,
     BOOL,

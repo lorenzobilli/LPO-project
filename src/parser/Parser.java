@@ -28,9 +28,18 @@ public class Parser {
         Statement statement = parseStatement();
         if (tokenizer.getTokenType() == STATEMENT_SEP) {
             tokenizer.next();
-            return new MoreStatement(statement, parseStatementSequence());      //TODO: implement MoreStatement
+            return new MoreStatement(statement, parseStatementSequence());
         }
-        return new SingleStatement(statement);      //TODO: implement SingleStatement
+        return new SingleStatement(statement);
+    }
+
+    private ExpressionSequence parseExpressionSequence() throws IOException, ScannerException, ParserException {
+        Expression expression = parseExpression();
+        if (tokenizer.getTokenType() == EXPRESSION_SEP) {
+            tokenizer.next();
+            return new MoreExpression(expression, parseExpressionSequence());
+        }
+        return new SingleExpression(expression);
     }
 
     private Statement parseStatement() throws ParserException, IOException, ScannerException {
@@ -71,19 +80,10 @@ public class Parser {
         Identity identity = parseIdentity();
         consume(IN);
         Expression expression = parseExpression();
-        consume(BRACES_OPEN);   //TODO: Consider renaming
+        consume(START_BLOCK);
         StatementSequence statementSequence = parseStatementSequence();
-        consume(BRACES_CLOSED);
+        consume(END_BLOCK);
         return new ForEachStatement(identity, expression, statementSequence);
-    }
-
-    private ExpressionSequence parseExpressionSequence() throws IOException, ScannerException, ParserException {
-        Expression expression = parseExpression();
-        if (tokenizer.getTokenType() == COMMA) {    //TODO: consider renaming COMMA to EXPRESSION_SEP
-            tokenizer.next();
-            return new MoreExpression(expression, parseExpressionSequence());
-        }
-        return new SingleExpression(expression);
     }
 
     private Expression parseExpression() throws IOException, ScannerException, ParserException {
@@ -114,28 +114,51 @@ public class Parser {
     }
 
     private Expression parseLessThan() throws IOException, ScannerException, ParserException {
-        Expression expression = parseAdd();
+        Expression expression = parseConcatenate();
         while (tokenizer.getTokenType() == LESSTHAN) {
             tokenizer.next();
-            expression = new LessThan(expression, parseAdd());
+            expression = new LessThan(expression, parseConcatenate());
         }
         return expression;
     }
 
-    private Expression parseAdd() throws IOException, ScannerException, ParserException {
-        Expression expression = parseTimes();
-        while (tokenizer.getTokenType() == PLUS) {
+    private Expression parseConcatenate() throws ScannerException, ParserException, IOException {
+        Expression expression = parseAddAndSubtract();
+        while (tokenizer.getTokenType() == CONCATENATE) {
             tokenizer.next();
-            expression = new Add(expression, parseTimes());
+            expression = new Concatenate(expression, parseAddAndSubtract());
         }
         return expression;
     }
 
-    private Expression parseTimes() throws IOException, ScannerException, ParserException {
+    private Expression parseAddAndSubtract() throws IOException, ScannerException, ParserException {
+        Expression expression = parseTimesAndFraction();
+        while (tokenizer.getTokenType() == PLUS || tokenizer.getTokenType() == MINUS) {     //TODO: unary op conflict?
+            switch (tokenizer.getTokenType()) {
+                case PLUS:
+                    expression = new Add(expression, parseTimesAndFraction());
+                    break;
+                case MINUS:
+                    expression = new Subtract(expression, parseTimesAndFraction());
+                    break;
+            }
+            tokenizer.next();
+        }
+        return expression;
+    }
+
+    private Expression parseTimesAndFraction() throws IOException, ScannerException, ParserException {
         Expression expression = parseAtom();
-        while (tokenizer.getTokenType() == TIMES) {
+        while (tokenizer.getTokenType() == TIMES || tokenizer.getTokenType() == FRACTION) {
+            switch (tokenizer.getTokenType()) {
+                case TIMES:
+                    expression = new Multiply(expression, parseAtom());
+                    break;
+                case FRACTION:
+                    expression = new Divide(expression, parseAtom());
+                    break;
+            }
             tokenizer.next();
-            expression = new Multiply(expression, parseAtom());
         }
         return expression;
     }
@@ -152,20 +175,20 @@ public class Parser {
                 return parseIdentity();
             case NOT:
                 return parseNot();
-            case MINUS:
-                return parseMinus();
+            case SIGN:
+                return parseSign();
             case POP:
                 return parsePop();
             case TOP:
                 return parseTop();
             case PUSH:
                 return parsePush();
-            case BRACKETS_OPEN:
+            case START_LIST:
                 return parseList();
-            case PARENTHESIS_OPEN:
+            case OPEN_PAR:
                 tokenizer.next();
                 Expression expression = parseExpression();
-                consume(PARENTHESIS_CLOSED);
+                consume(CLOSED_PAR);
                 return expression;
         }
     }
@@ -193,8 +216,8 @@ public class Parser {
         return new Not(parseAtom());
     }
 
-    private Sign parseMinus() throws ScannerException, ParserException, IOException {
-        consume(MINUS);
+    private Sign parseSign() throws ScannerException, ParserException, IOException {
+        consume(SIGN);
         return new Sign(parseAtom());
     }
 
@@ -212,18 +235,18 @@ public class Parser {
 
     private Push parsePush() throws ScannerException, ParserException, IOException {
         consume(PUSH);
-        consume(PARENTHESIS_OPEN);
+        consume(OPEN_PAR);
         Expression left = parseExpression();
-        consume(COMMA);     //TODO: Consider renaming
+        consume(EXPRESSION_SEP);
         Expression right = parseExpression();
-        consume(PARENTHESIS_CLOSED);
+        consume(CLOSED_PAR);
         return new Push(left, right);
     }
 
     private List parseList() throws ScannerException, ParserException, IOException {
-        consume(BRACKETS_OPEN);     //TODO: Consider renaming
+        consume(START_LIST);
         ExpressionSequence expressionSequence = parseExpressionSequence();
-        consume(BRACKETS_CLOSED);      //TODO: Consider renaming
+        consume(END_LIST);
         return new List(expressionSequence);
     }
 
