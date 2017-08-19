@@ -252,7 +252,7 @@ public class Parser {
 
     private void unexpectedTokenError() throws ParserException {
         throw new ParserException(
-                "Unexpected token " + tokenizer.getTokenType() + "('" + tokenizer.getTokenString() + "')"
+                "Unexpected token " + tokenizer.getTokenType() + " ('" + tokenizer.getTokenString() + "')"
         );
     }
 
@@ -260,7 +260,7 @@ public class Parser {
         final TokenType foundToken = tokenizer.getTokenType();
         if (foundToken != expectedToken) {
             throw new ParserException(
-                    "Expecting " + expectedToken + ", found " + foundToken + "('" + tokenizer.getTokenString() + "')"
+                    "Expecting " + expectedToken + ", found " + foundToken + " ('" + tokenizer.getTokenString() + "')"
             );
         }
     }
