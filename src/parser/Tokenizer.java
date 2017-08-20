@@ -32,7 +32,12 @@ public class Tokenizer implements AutoCloseable {
         // Group number 3: regular expression for skipped characters
         final Pattern skipRegEx = Pattern.compile("(\\s+|//.*)");
         // Group number 4: regular expression for symbols
-        final Pattern symbolRegEx = Pattern.compile("\\+|-|\\*|/|=|@|&&|\\|\\||!|==|<|\\(|\\)|\\[|]|\\{|}|,|;");
+        final Pattern symbolRegEx = Pattern.compile("\\|\\||&&|==|\\+|\\*|=|\\(|\\)|;|,|\\{|}|<|-|!|\\[|]");
+
+        //TODO: Add remaining symbols to symbolRegEx
+        /*
+        Original (wrong) regex: "\\+|-|\\*|/|=|@|&&|\\|\\||!|==|<|\\(|\\)|\\[|]|\\{|}|,|;"
+        */
 
         regEx = Pattern.compile(identRegEx + "|" + numRegEx + "|" + skipRegEx + "|" + symbolRegEx);
     }
