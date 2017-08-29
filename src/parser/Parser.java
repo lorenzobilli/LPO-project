@@ -54,6 +54,10 @@ public class Parser {
                 return parseAssignStatement();
             case FOR:
                 return parseForEachStatement();
+            case IF:
+                return parseIfStatement();
+            case WHILE:
+                return parseWhileStatement();
         }
     }
 
@@ -84,6 +88,32 @@ public class Parser {
         StatementSequence statementSequence = parseStatementSequence();
         consume(END_BLOCK);
         return new ForEachStatement(identity, expression, statementSequence);
+    }
+
+    private IfStatement parseIfStatement() throws ScannerException, ParserException, IOException {
+        consume(IF);
+        consume(OPEN_PAR);
+        Expression expression = parseExpression();
+        consume(CLOSED_PAR);
+        consume(START_BLOCK);
+        StatementSequence ifStatementSequence = parseStatementSequence();
+        consume(END_BLOCK);
+        consume(ELSE);
+        consume(START_BLOCK);
+        StatementSequence elseStatementSequence = parseStatementSequence();
+        consume(END_BLOCK);
+        return new IfStatement(expression, ifStatementSequence, elseStatementSequence);
+    }
+
+    private WhileStatement parseWhileStatement() throws ScannerException, ParserException, IOException {
+        consume(WHILE);
+        consume(OPEN_PAR);
+        Expression expression = parseExpression();
+        consume(CLOSED_PAR);
+        consume(START_BLOCK);
+        StatementSequence statementSequence = parseStatementSequence();
+        consume(END_BLOCK);
+        return new WhileStatement(expression, statementSequence);
     }
 
     private Expression parseExpression() throws IOException, ScannerException, ParserException {

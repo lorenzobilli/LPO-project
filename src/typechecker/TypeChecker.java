@@ -160,6 +160,25 @@ public class TypeChecker implements Visitor<Type> {
         return null;
     }
 
+    @Override
+    public Type visitIfStatement(Expression expression, StatementSequence ifBlock, StatementSequence elseBlock) {
+        staticEnvironment.enterScope();
+        ifBlock.accept(this);
+        staticEnvironment.exitScope();
+        staticEnvironment.enterScope();
+        elseBlock.accept(this);
+        staticEnvironment.exitScope();
+        return null;
+    }
+
+    @Override
+    public Type visitWhileStatement(Expression expression, StatementSequence block) {
+        staticEnvironment.enterScope();
+        block.accept(this);
+        staticEnvironment.exitScope();
+        return null;
+    }
+
     private void checkBinaryOperator(Expression left, Expression right, Type type) {
         left.accept(this).checkEqual(type);
         right.accept(this).checkEqual(type);

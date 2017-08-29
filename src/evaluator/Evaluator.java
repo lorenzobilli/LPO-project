@@ -148,4 +148,30 @@ public class Evaluator implements Visitor<Value> {
         }
         return null;
     }
+
+    @Override
+    public Value visitIfStatement(Expression expression, StatementSequence ifBlock, StatementSequence elseBlock) {
+        boolean condition = expression.accept(this).asBoolean();
+        if (condition) {
+            dynamicEnvironment.enterScope();
+            ifBlock.accept(this);
+            dynamicEnvironment.exitScope();
+        } else {
+            dynamicEnvironment.enterScope();
+            elseBlock.accept(this);
+            dynamicEnvironment.exitScope();
+        }
+        return null;
+    }
+
+    @Override
+    public Value visitWhileStatement(Expression expression, StatementSequence block) {
+        boolean condition = expression.accept(this).asBoolean();
+        dynamicEnvironment.enterScope();
+        while (condition) {
+            block.accept(this);
+        }
+        dynamicEnvironment.exitScope();
+        return null;
+    }
 }

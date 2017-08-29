@@ -31,4 +31,6 @@ public interface Visitor<T> {
     T visitVarStatement(Identity identity, Expression expression);
     T visitAssignStatement(Identity identity, Expression expression);
     T visitForEachStatement(Identity identity, Expression expression, StatementSequence block);
+    T visitIfStatement(Expression expression, StatementSequence ifBlock, StatementSequence elseBlock);
+    T visitWhileStatement(Expression expression, StatementSequence block);
 }
