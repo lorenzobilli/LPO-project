@@ -26,20 +26,20 @@ public class Tokenizer implements AutoCloseable {
 
     static {
         // Group number 1: regular expression for identities
-        final Pattern identRegEx = Pattern.compile("([a-zA-Z][a-zA-Z0-9]*)");
+        final Pattern identRegEx = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*");
         // Group number 2: regular expression for numbers
-        final Pattern numRegEx = Pattern.compile("(0|[1-9][0-9]*|0[1-7][0-7]*)");
+        final Pattern numRegEx = Pattern.compile("0|[1-9][0-9]*|0[1-7][0-7]*");
         // Group number 3: regular expression for skipped characters
-        final Pattern skipRegEx = Pattern.compile("(\\s+|//.*)");
+        final Pattern skipRegEx = Pattern.compile("\\s+|//.*");
         // Group number 4: regular expression for symbols
-        final Pattern symbolRegEx = Pattern.compile("\\|\\||&&|==|\\+|\\*|=|\\(|\\)|;|,|\\{|}|<|-|!|\\[|]");
+        final Pattern symbolRegEx = Pattern.compile("\\|\\||&&|==|\\+|-|\\*|=|\\(|\\)|;|,|\\{|}|<|-[0-9]+|!|\\[|]");
 
         //TODO: Add remaining symbols to symbolRegEx
         /*
         Original (wrong) regex: "\\+|-|\\*|/|=|@|&&|\\|\\||!|==|<|\\(|\\)|\\[|]|\\{|}|,|;"
         */
 
-        regEx = Pattern.compile(identRegEx + "|" + numRegEx + "|" + skipRegEx + "|" + symbolRegEx);
+        regEx = Pattern.compile("(" + identRegEx + ")|(" + numRegEx + ")|(" + skipRegEx + ")|(" + symbolRegEx + ")");
     }
 
     static {
@@ -71,6 +71,7 @@ public class Tokenizer implements AutoCloseable {
         symbols.put("&&", AND);
         symbols.put("||", OR);
         symbols.put("!", NOT);
+        symbols.put("-", SIGN);
         symbols.put("==", EQUAL);
         symbols.put("<", LESSTHAN);
         symbols.put("(", OPEN_PAR);
@@ -87,7 +88,7 @@ public class Tokenizer implements AutoCloseable {
         scanner = new Scanner(regEx, reader);
     }
 
-    private void checkType() {
+    private void checkType() throws TokenizerException {
         tokenString = scanner.group();
         // Searching for IDENT, BOOL or keywords inside group 2
         if (scanner.group(1) != null) {
@@ -114,7 +115,7 @@ public class Tokenizer implements AutoCloseable {
         // Only symbols are left (group 4), so token should be a symbol...
         tokenType = symbols.get(tokenString);
         if (tokenType == null) {
-            throw new AssertionError("Unrecognised token");     //TODO: Consider a TokenizerException
+            throw new TokenizerException("Unrecognised token");
         }
     }
 
@@ -127,7 +128,13 @@ public class Tokenizer implements AutoCloseable {
                 return tokenType = EOF;
             }
             scanner.next();
-            checkType();
+            try {
+                checkType();
+            } catch (TokenizerException e) {
+                e.getMessage();
+                e.getCause();
+                e.printStackTrace();
+            }
         } while (tokenType == SKIP);
         return tokenType;
     }
