@@ -93,17 +93,17 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitIntegerLiteral(int value) {
-        return null;
+        return INT;
     }
 
     @Override
     public Type visitBooleanLiteral(boolean value) {
-        return null;
+        return BOOL;
     }
 
     @Override
     public Type visitIdentity(String name) {
-        return null;
+        return staticEnvironment.lookup(new SimpleIdentity(name));
     }
 
     @Override
