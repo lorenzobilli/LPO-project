@@ -6,6 +6,7 @@ import common.ast.*;
  * Visitor interface
  */
 public interface Visitor<T> {
+    T visitProgram(StatementSequence statementSequence);
     T visitMoreStatement(Statement first, StatementSequence rest);
     T visitSingleStatement(Statement statement);
     T visitMoreExpression(Expression first, ExpressionSequence rest);

@@ -19,7 +19,7 @@ public class Program implements Prog {
 
     @Override
     public <T> T accept(Visitor<T> visitor) {
-        return null;
+        return visitor.visitProgram(statementSequence);
     }
 
     @Override

@@ -15,6 +15,12 @@ public class TypeChecker implements Visitor<Type> {
     private final Environment<Type> staticEnvironment = new Environment<>();
 
     @Override
+    public Type visitProgram(StatementSequence statementSequence) {
+        statementSequence.accept(this);
+        return null;
+    }
+
+    @Override
     public Type visitMoreStatement(Statement first, StatementSequence rest) {
         Type expected = first.accept(this);
         return rest.accept(this).checkEqual(expected);

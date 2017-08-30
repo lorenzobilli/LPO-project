@@ -12,6 +12,12 @@ public class Evaluator implements Visitor<Value> {
     private final Environment<Value> dynamicEnvironment = new Environment<>();
 
     @Override
+    public Value visitProgram(StatementSequence statementSequence) {
+        statementSequence.accept(this);
+        return null;
+    }
+
+    @Override
     public Value visitMoreStatement(Statement first, StatementSequence rest) {
         first.accept(this);
         rest.accept(this);
