@@ -56,7 +56,7 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitConcatenate(Expression left, Expression right) {
-        return null;
+        return new LinkedListValue(left.accept(this).asList(), right.accept(this).asList());
     }
 
     @Override

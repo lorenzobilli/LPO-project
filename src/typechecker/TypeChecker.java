@@ -64,7 +64,8 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitConcatenate(Expression left, Expression right) {
-        return null;
+        checkBinaryOperator(left, right);
+        return left.accept(this);
     }
 
     @Override
@@ -179,6 +180,10 @@ public class TypeChecker implements Visitor<Type> {
         block.accept(this);
         staticEnvironment.exitScope();
         return null;
+    }
+
+    private void checkBinaryOperator(Expression left, Expression right) {
+        left.accept(this).checkEqual(right.accept(this));
     }
 
     private void checkBinaryOperator(Expression left, Expression right, Type type) {

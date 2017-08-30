@@ -21,6 +21,13 @@ public class LinkedListValue implements ListValue {
         }
     }
 
+    public LinkedListValue(ListValue left, ListValue right) {
+        this(left);
+        for (Value value : right) {
+            this.list.add(value);
+        }
+    }
+
     public LinkedListValue(Value value, ListValue tail) {
         this(tail);
         list.addFirst(requireNonNull(value));
