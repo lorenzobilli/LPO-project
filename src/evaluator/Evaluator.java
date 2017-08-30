@@ -66,7 +66,7 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitSubtract(Expression left, Expression right) {
-        return null;
+        return new IntValue(left.accept(this).asInt() - right.accept(this).asInt());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitDivide(Expression left, Expression right) {
-        return null;
+        return new IntValue(left.accept(this).asInt() / right.accept(this).asInt());
     }
 
     @Override

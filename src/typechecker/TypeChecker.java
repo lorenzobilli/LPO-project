@@ -75,7 +75,8 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitSubtract(Expression left, Expression right) {
-        return null;
+        checkBinaryOperator(left, right, INT);
+        return INT;
     }
 
     @Override
@@ -86,7 +87,8 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitDivide(Expression left, Expression right) {
-        return null;
+        checkBinaryOperator(left, right, INT);
+        return INT;
     }
 
     @Override
