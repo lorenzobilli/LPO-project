@@ -78,6 +78,26 @@ public class Interpreter {
     }
 
     private static void fromFile(String inputFileName) {
+        try (Tokenizer tokenizer = new Tokenizer(new FileReader(inputFileName))) {
+            Parser parser = new Parser(tokenizer);
+            Prog program = parser.parseProgram();
+            System.out.println("Program correctly parsed: " + program);
+            program.accept(new TypeChecker());
+            System.out.println("Program statically correct");
+            program.accept(new Evaluator());
+        } catch (ScannerException e) {
+            String skipped = e.getSkipped();
+            if (skipped != null) {
+                System.err.println(e.getMessage() + e.getSkipped());
+            } else {
+                System.err.println(e.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private static void _fromFile(String inputFileName) {
         try {
             inputReader = new BufferedReader(new FileReader(inputFileName));
         } catch (IOException e) {
