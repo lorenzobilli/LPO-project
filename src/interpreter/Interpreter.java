@@ -48,10 +48,12 @@ public class Interpreter {
         try (Tokenizer tokenizer = new Tokenizer(new InputStreamReader(System.in))) {
             Parser parser = new Parser(tokenizer);
             Prog program = parser.parseProgram();
-            System.out.println("Program correctly parsed: " + program);
+            System.out.println("Program correctly parsed");
+            System.out.println(program);
             program.accept(new TypeChecker());
             System.out.println("Program statically correct");
             program.accept(new Evaluator());
+            System.out.println("Program dinamically correct");
         } catch (ScannerException e) {
             String skipped = e.getSkipped();
             if (skipped != null) {
@@ -81,10 +83,12 @@ public class Interpreter {
         try (Tokenizer tokenizer = new Tokenizer(new FileReader(inputFileName))) {
             Parser parser = new Parser(tokenizer);
             Prog program = parser.parseProgram();
-            System.out.println("Program correctly parsed: " + program);
+            System.out.println("Program correctly parsed");
+            System.out.println(program);
             program.accept(new TypeChecker());
             System.out.println("Program statically correct");
             program.accept(new Evaluator());
+            System.out.println("Program dinamically correct");
         } catch (ScannerException e) {
             String skipped = e.getSkipped();
             if (skipped != null) {
