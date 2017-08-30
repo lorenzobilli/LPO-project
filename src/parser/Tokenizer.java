@@ -26,7 +26,7 @@ public class Tokenizer implements AutoCloseable {
 
     static {
         // Group number 1: regular expression for identities
-        final Pattern identRegEx = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*");
+        final Pattern identRegEx = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
         // Group number 2: regular expression for numbers
         final Pattern numRegEx = Pattern.compile("0|[1-9][0-9]*|0[1-7][0-7]*");
         // Group number 3: regular expression for skipped characters
