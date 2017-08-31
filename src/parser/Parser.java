@@ -164,6 +164,7 @@ public class Parser {
     private Expression parseAddAndSubtract() throws IOException, ScannerException, ParserException {
         Expression expression = parseTimesAndFraction();
         while (tokenizer.getTokenType() == PLUS || tokenizer.getTokenType() == MINUS) {     //TODO: unary op conflict?
+            tokenizer.next();
             switch (tokenizer.getTokenType()) {
                 case PLUS:
                     expression = new Add(expression, parseTimesAndFraction());
@@ -172,7 +173,6 @@ public class Parser {
                     expression = new Subtract(expression, parseTimesAndFraction());
                     break;
             }
-            tokenizer.next();
         }
         return expression;
     }
@@ -180,6 +180,7 @@ public class Parser {
     private Expression parseTimesAndFraction() throws IOException, ScannerException, ParserException {
         Expression expression = parseAtom();
         while (tokenizer.getTokenType() == TIMES || tokenizer.getTokenType() == FRACTION) {
+            tokenizer.next();
             switch (tokenizer.getTokenType()) {
                 case TIMES:
                     expression = new Multiply(expression, parseAtom());
@@ -188,7 +189,6 @@ public class Parser {
                     expression = new Divide(expression, parseAtom());
                     break;
             }
-            tokenizer.next();
         }
         return expression;
     }
