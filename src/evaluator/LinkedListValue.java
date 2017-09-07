@@ -40,6 +40,16 @@ public class LinkedListValue implements ListValue {
     }
 
     @Override
+    public int size() {
+        return list.size();
+    }
+
+    @Override
+    public Value get(int index) {
+        return list.get(index);
+    }
+
+    @Override
     public ListValue push(Value value) {
         LinkedListValue result = new LinkedListValue(this);
         result.list.addLast(requireNonNull(value));

@@ -121,6 +121,32 @@ public class Evaluator implements Visitor<Value> {
     }
 
     @Override
+    public Value visitPush(Expression left, Expression right) {
+        return new LinkedListValue(right.accept(this).asList().push(left.accept(this)));
+    }
+
+    @Override
+    public Value visitLength(Expression expression) {
+        ListValue list = expression.accept(this).asList();
+        return new IntValue(list.size());
+    }
+
+    @Override
+    public Value visitPair(Expression left, Expression right) {
+        return new LinkedListValue(left.accept(this).asList(), right.accept(this).asList());
+    }
+
+    @Override
+    public Value visitFst(Expression expression) {
+        return expression.accept(this).asList().get(0);
+    }
+
+    @Override
+    public Value visitSnd(Expression expression) {
+        return expression.accept(this).asList().get(1);
+    }
+
+    @Override
     public Value visitListLiteral(ExpressionSequence expressionSequence) {
         return expressionSequence.accept(this);
     }

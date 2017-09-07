@@ -213,6 +213,14 @@ public class Parser {
                 return parseTop();
             case PUSH:
                 return parsePush();
+            case LENGTH:
+                return parseLength();
+            case PAIR:
+                return parsePair();
+            case FST:
+                return parseFst();
+            case SND:
+                return parseSnd();
             case START_LIST:
                 return parseList();
             case OPEN_PAR:
@@ -271,6 +279,34 @@ public class Parser {
         Expression right = parseExpression();
         consume(CLOSED_PAR);
         return new Push(left, right);
+    }
+
+    private Length parseLength() throws ScannerException, ParserException, IOException {
+        consume(LENGTH);
+        Expression expression = parseAtom();
+        return new Length(expression);
+    }
+
+    private Pair parsePair() throws ScannerException, ParserException, IOException {
+        consume(PAIR);
+        consume(OPEN_PAR);
+        Expression left = parseExpression();
+        consume(EXPRESSION_SEP);
+        Expression right = parseExpression();
+        consume(CLOSED_PAR);
+        return new Pair(left, right);
+    }
+
+    private Fst parseFst() throws ScannerException, ParserException, IOException {
+        consume(FST);
+        Expression expression = parseAtom();
+        return new Fst(expression);
+    }
+
+    private Snd parseSnd() throws ScannerException, ParserException, IOException {
+        consume(SND);
+        Expression expression = parseAtom();
+        return new Snd(expression);
     }
 
     private List parseList() throws ScannerException, ParserException, IOException {

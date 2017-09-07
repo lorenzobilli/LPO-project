@@ -54,8 +54,8 @@ public class Tokenizer implements AutoCloseable {
         keywords.put("print", PRINT);
         keywords.put("length", LENGTH);
         keywords.put("pair", PAIR);
-        keywords.put("fst", FIRST);
-        keywords.put("snd", SECOND);
+        keywords.put("fst", FST);
+        keywords.put("snd", SND);
         keywords.put("push", PUSH);
         keywords.put("pop", POP);
         keywords.put("top", TOP);

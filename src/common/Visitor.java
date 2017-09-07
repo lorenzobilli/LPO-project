@@ -27,6 +27,11 @@ public interface Visitor<T> {
     T visitSign(Expression expression);
     T visitTop(Expression expression);
     T visitPop(Expression expression);
+    T visitPush(Expression left, Expression right);
+    T visitLength(Expression expression);
+    T visitPair(Expression left, Expression right);
+    T visitFst(Expression expression);
+    T visitSnd(Expression expression);
     T visitListLiteral(ExpressionSequence expressionSequence);
     T visitPrintStatement(Expression expression);
     T visitVarStatement(Identity identity, Expression expression);

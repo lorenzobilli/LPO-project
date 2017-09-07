@@ -2,15 +2,12 @@ package common.ast;
 
 import common.Visitor;
 
-/**
- * Push class
- */
-public class Push implements Expression {
+public class Pair implements Expression {
 
     private final Expression left;
     private final Expression right;
 
-    public Push(Expression left, Expression right) {
+    public Pair(Expression left, Expression right) {
         this.left = left;
         this.right = right;
     }
@@ -30,6 +27,6 @@ public class Push implements Expression {
 
     @Override
     public <T> T accept(Visitor<T> visitor) {
-        return visitor.visitPush(left, right);
+        return visitor.visitPair(left, right);
     }
 }

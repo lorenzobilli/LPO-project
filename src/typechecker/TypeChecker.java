@@ -136,6 +136,39 @@ public class TypeChecker implements Visitor<Type> {
     }
 
     @Override
+    public Type visitPush(Expression left, Expression right) {
+        checkBinaryOperator(left, right);
+        return left.accept(this);
+    }
+
+    @Override
+    public Type visitLength(Expression expression) {
+        Type type = expression.accept(this);
+        type.checkList();
+        return type;
+    }
+
+    @Override
+    public Type visitPair(Expression left, Expression right) {
+        checkBinaryOperator(left, right);
+        return left.accept(this);
+    }
+
+    @Override
+    public Type visitFst(Expression expression) {
+        Type type = expression.accept(this);    //TODO: Check if this typechecking is correct
+        type.checkList();
+        return type;
+    }
+
+    @Override
+    public Type visitSnd(Expression expression) {
+        Type type = expression.accept(this);    //TODO: Check if this typechecking is correct
+        type.checkList();
+        return type;
+    }
+
+    @Override
     public Type visitListLiteral(ExpressionSequence expressionSequence) {
         return new ListType(expressionSequence.accept(this));
     }
