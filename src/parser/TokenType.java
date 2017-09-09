@@ -29,7 +29,6 @@ public enum TokenType {
     NOT,                    // !
     EQUAL,                  // ==
     LESSTHAN,               // <
-    SIGN,                   // -
     OPEN_PAR,               // (
     CLOSED_PAR,             // )
     START_LIST,             // [

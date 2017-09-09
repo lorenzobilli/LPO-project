@@ -71,7 +71,6 @@ public class Tokenizer implements AutoCloseable {
         symbols.put("&&", AND);
         symbols.put("||", OR);
         symbols.put("!", NOT);
-        symbols.put("-", SIGN);
         symbols.put("==", EQUAL);
         symbols.put("<", LESSTHAN);
         symbols.put("(", OPEN_PAR);

@@ -207,7 +207,7 @@ public class Parser {
                 return parseIdentity();
             case NOT:
                 return parseNot();
-            case SIGN:
+            case MINUS:     /* In this case, MINUS is the unary sign operator */
                 return parseSign();
             case POP:
                 return parsePop();
@@ -257,7 +257,7 @@ public class Parser {
     }
 
     private Sign parseSign() throws ScannerException, ParserException, IOException {
-        consume(SIGN);
+        consume(MINUS);
         return new Sign(parseAtom());
     }
 
