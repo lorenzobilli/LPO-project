@@ -145,7 +145,7 @@ public class TypeChecker implements Visitor<Type> {
     public Type visitLength(Expression expression) {
         Type type = expression.accept(this);
         type.checkList();
-        return type;
+        return INT;
     }
 
     @Override
