@@ -199,9 +199,8 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitWhileStatement(Expression expression, StatementSequence block) {
-        boolean condition = expression.accept(this).asBoolean();
         dynamicEnvironment.enterScope();
-        while (condition) {
+        while (expression.accept(this).asBoolean()) {
             block.accept(this);
         }
         dynamicEnvironment.exitScope();
