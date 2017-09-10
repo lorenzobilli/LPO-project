@@ -122,7 +122,8 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitPush(Expression left, Expression right) {
-        return new LinkedListValue(right.accept(this).asList().push(left.accept(this)));
+        Value value = left.accept(this);
+        return right.accept(this).asList().push(value);
     }
 
     @Override
@@ -133,7 +134,7 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitPair(Expression left, Expression right) {
-        return new LinkedListValue(left.accept(this).asList(), right.accept(this).asList());
+        return null;    //TODO: Reimplement this method
     }
 
     @Override

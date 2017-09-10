@@ -70,8 +70,9 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitConcatenate(Expression left, Expression right) {
-        checkBinaryOperator(left, right);
-        return left.accept(this);
+        Type type = left.accept(this);
+        type.checkList();
+        return right.accept(this).checkEqual(new ListType(type));
     }
 
     @Override
@@ -137,8 +138,8 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitPush(Expression left, Expression right) {
-        checkBinaryOperator(left, right);
-        return left.accept(this);
+        Type type = left.accept(this);
+        return right.accept(this).checkEqual(new ListType(type));
     }
 
     @Override
@@ -150,8 +151,7 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitPair(Expression left, Expression right) {
-        checkBinaryOperator(left, right);
-        return left.accept(this);
+        return null;    //TODO: Reimplement this method
     }
 
     @Override
@@ -221,9 +221,11 @@ public class TypeChecker implements Visitor<Type> {
         return null;
     }
 
+    /*
     private void checkBinaryOperator(Expression left, Expression right) {
         left.accept(this).checkEqual(right.accept(this));
     }
+    */
 
     private void checkBinaryOperator(Expression left, Expression right, Type type) {
         left.accept(this).checkEqual(type);
