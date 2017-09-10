@@ -22,8 +22,9 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitMoreStatement(Statement first, StatementSequence rest) {
-        Type expected = first.accept(this);
-        return rest.accept(this).checkEqual(expected);
+        first.accept(this);
+        rest.accept(this);
+        return null;
     }
 
     @Override
@@ -220,12 +221,6 @@ public class TypeChecker implements Visitor<Type> {
         staticEnvironment.exitScope();
         return null;
     }
-
-    /*
-    private void checkBinaryOperator(Expression left, Expression right) {
-        left.accept(this).checkEqual(right.accept(this));
-    }
-    */
 
     private void checkBinaryOperator(Expression left, Expression right, Type type) {
         left.accept(this).checkEqual(type);
