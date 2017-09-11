@@ -18,4 +18,11 @@ public interface Type {
         }
         return ((ListType) this).getListType();
     }
+
+    default Type checkCouple() throws TypeCheckerException {
+        if (!(this instanceof CoupleType)) {
+            throw new TypeCheckerException(toString(), CoupleType.COUPLE);
+        }
+        return this;
+    }
 }

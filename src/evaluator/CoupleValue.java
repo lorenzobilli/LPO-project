@@ -20,4 +20,21 @@ public class CoupleValue implements Value {
     public Value getSecondValue() {
         return secondValue;
     }
+
+    @Override
+    public final boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof CoupleValue)) {
+            return false;
+        }
+        CoupleValue couple = (CoupleValue) object;
+        return firstValue.equals(couple.firstValue) && secondValue.equals(couple.secondValue);
+    }
+
+    @Override
+    public CoupleValue asCouple() {
+        return this;
+    }
 }

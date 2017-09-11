@@ -139,12 +139,12 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitFst(Expression expression) {
-        return expression.accept(this).asList().get(0);
+        return expression.accept(this).asCouple().getFirstValue();
     }
 
     @Override
     public Value visitSnd(Expression expression) {
-        return expression.accept(this).asList().get(1);
+        return expression.accept(this).asCouple().getSecondValue();
     }
 
     @Override

@@ -155,16 +155,12 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitFst(Expression expression) {
-        Type type = expression.accept(this);    //TODO: Check if this typechecking is correct
-        type.checkList();
-        return type;
+        return expression.accept(this).checkCouple();
     }
 
     @Override
     public Type visitSnd(Expression expression) {
-        Type type = expression.accept(this);    //TODO: Check if this typechecking is correct
-        type.checkList();
-        return type;
+        return expression.accept(this).checkCouple();
     }
 
     @Override
