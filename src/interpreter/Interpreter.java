@@ -15,8 +15,6 @@ import java.io.*;
 public class Interpreter {
 
     private static final String prompt = ">: ";
-    private static BufferedReader inputReader;
-    private static BufferedWriter outputWriter;
 
     public static void main(String[] args) {
         switch (args.length) {
@@ -48,12 +46,9 @@ public class Interpreter {
         try (Tokenizer tokenizer = new Tokenizer(new InputStreamReader(System.in))) {
             Parser parser = new Parser(tokenizer);
             Prog program = parser.parseProgram();
-            System.out.println("Program correctly parsed");
-            System.out.println(program);
             program.accept(new TypeChecker());
-            System.out.println("Program statically correct");
             program.accept(new Evaluator());
-            System.out.println("Program dinamically correct");
+            System.out.flush();
         } catch (ScannerException e) {
             String skipped = e.getSkipped();
             if (skipped != null) {
@@ -63,19 +58,6 @@ public class Interpreter {
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
-        }
-    }
-
-    private static void _interactive() {
-        inputReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print(prompt);
-        try {
-            String input = inputReader.readLine();
-            System.out.println(input);
-        } catch (IOException e) {
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
         }
     }
 
@@ -83,12 +65,9 @@ public class Interpreter {
         try (Tokenizer tokenizer = new Tokenizer(new FileReader(inputFileName))) {
             Parser parser = new Parser(tokenizer);
             Prog program = parser.parseProgram();
-            System.out.println("Program correctly parsed");
-            System.out.println(program);
             program.accept(new TypeChecker());
-            System.out.println("Program statically correct");
             program.accept(new Evaluator());
-            System.out.println("Program dinamically correct");
+            System.out.flush();
         } catch (ScannerException e) {
             String skipped = e.getSkipped();
             if (skipped != null) {
@@ -101,61 +80,52 @@ public class Interpreter {
         }
     }
 
-    private static void _fromFile(String inputFileName) {
-        try {
-            inputReader = new BufferedReader(new FileReader(inputFileName));
-        } catch (IOException e) {
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
-        }
-        try {
-            String line;
-            while ((line = inputReader.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
-        }
-    }
-
     private static void toFile(String outputFileName) {
-        inputReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print(prompt);
         try {
-            outputWriter = new BufferedWriter(new FileWriter(outputFileName));
-            outputWriter.write(inputReader.readLine());
-            outputWriter.newLine();
-            outputWriter.flush();
-        } catch (IOException e) {
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
+            System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(outputFileName))));
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        try (Tokenizer tokenizer = new Tokenizer(new InputStreamReader(System.in))) {
+            Parser parser = new Parser(tokenizer);
+            Prog program = parser.parseProgram();
+            program.accept(new TypeChecker());
+            program.accept(new Evaluator());
+            System.out.flush();
+        } catch (ScannerException e) {
+            String skipped = e.getSkipped();
+            if (skipped != null) {
+                System.err.println(e.getMessage() + e.getSkipped());
+            } else {
+                System.err.println(e.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 
     private static void fromFileToFile(String inputFileName, String outputFileName) {
         try {
-            inputReader = new BufferedReader(new FileReader(inputFileName));
-            outputWriter = new BufferedWriter(new FileWriter(outputFileName));
-        } catch (IOException e) {
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
+            System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(outputFileName))));
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
         }
-        try {
-            String line;
-            while ((line = inputReader.readLine()) != null) {
-                outputWriter.write(line);
-                outputWriter.newLine();
-                outputWriter.flush();
+        try (Tokenizer tokenizer = new Tokenizer(new FileReader(inputFileName))) {
+            Parser parser = new Parser(tokenizer);
+            Prog program = parser.parseProgram();
+            program.accept(new TypeChecker());
+            program.accept(new Evaluator());
+            System.out.flush();
+        } catch (ScannerException e) {
+            String skipped = e.getSkipped();
+            if (skipped != null) {
+                System.err.println(e.getMessage() + e.getSkipped());
+            } else {
+                System.err.println(e.getMessage());
             }
-        } catch (IOException e) {
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 }
