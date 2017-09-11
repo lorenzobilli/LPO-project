@@ -25,19 +25,15 @@ public class Tokenizer implements AutoCloseable {
     private int intValue;
 
     static {
+        
         // Group number 1: regular expression for identities
         final Pattern identRegEx = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
         // Group number 2: regular expression for numbers
-        final Pattern numRegEx = Pattern.compile("0|[1-9][0-9]*|0[1-7][0-7]*");
+        final Pattern numRegEx = Pattern.compile("[1-9][0-9]*|0[1-7][0-7]*|0");
         // Group number 3: regular expression for skipped characters
         final Pattern skipRegEx = Pattern.compile("\\s+|//.*");
         // Group number 4: regular expression for symbols
-        final Pattern symbolRegEx = Pattern.compile("\\|\\||&&|==|\\+|-|\\*|/|=|@|\\(|\\)|;|,|\\{|}|<|-[0-9]+|!|\\[|]");
-
-        //TODO: Add remaining symbols to symbolRegEx
-        /*
-        Original (wrong) regex: "\\+|-|\\*|/|=|@|&&|\\|\\||!|==|<|\\(|\\)|\\[|]|\\{|}|,|;"
-        */
+        final Pattern symbolRegEx = Pattern.compile("\\|\\||&&|==|\\+|-|\\*|/|=|@|\\(|\\)|;|,|\\{|}|<|!|\\[|]");
 
         regEx = Pattern.compile("(" + identRegEx + ")|(" + numRegEx + ")|(" + skipRegEx + ")|(" + symbolRegEx + ")");
     }
@@ -103,7 +99,11 @@ public class Tokenizer implements AutoCloseable {
         // Searching for NUM tokens inside group 2
         if (scanner.group(2) != null) {
             tokenType = NUM;
-            intValue = Integer.parseInt(tokenString);
+            if (tokenString.startsWith("0")) {
+                intValue = Integer.parseInt(tokenString, 8);
+            } else {
+                intValue = Integer.parseInt(tokenString);
+            }
             return;
         }
         // Searching for SKIP tokens inside group 3
