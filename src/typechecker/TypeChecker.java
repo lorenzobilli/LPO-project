@@ -71,7 +71,7 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitConcatenate(Expression left, Expression right) {
-        return left.accept(this).checkEqual(right.accept(this));
+        return right.accept(this).checkEqual(left.accept(this));
     }
 
     @Override
