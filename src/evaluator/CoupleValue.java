@@ -34,6 +34,11 @@ public class CoupleValue implements Value {
     }
 
     @Override
+    public String toString() {
+        return "(" + firstValue.toString() + ", " + secondValue.toString() + ")";
+    }
+
+    @Override
     public CoupleValue asCouple() {
         return this;
     }

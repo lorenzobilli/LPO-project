@@ -36,7 +36,7 @@ public class CoupleType implements Type {
 
     @Override
     public String toString() {
-        return COUPLE;
+        return "(" + firstType.toString() + "*" + secondType.toString() + ")";
     }
 
 }

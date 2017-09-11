@@ -25,7 +25,7 @@ public class Tokenizer implements AutoCloseable {
     private int intValue;
 
     static {
-        
+
         // Group number 1: regular expression for identities
         final Pattern identRegEx = Pattern.compile("[a-zA-Z][a-zA-Z0-9_]*");
         // Group number 2: regular expression for numbers
