@@ -20,4 +20,8 @@ public interface Value {
     default ListValue asList() {
         throw new ClassCastException("Expecting a list value");
     }
+
+    default CoupleValue asCouple() {
+        throw new ClassCastException("Expecting a couple value");
+    }
 }

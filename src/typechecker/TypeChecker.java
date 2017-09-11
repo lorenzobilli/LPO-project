@@ -150,7 +150,7 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitPair(Expression left, Expression right) {
-        return null;    //TODO: Reimplement this method
+        return new CoupleType(left.accept(this), right.accept(this));
     }
 
     @Override

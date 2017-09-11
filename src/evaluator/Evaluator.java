@@ -134,7 +134,7 @@ public class Evaluator implements Visitor<Value> {
 
     @Override
     public Value visitPair(Expression left, Expression right) {
-        return null;    //TODO: Reimplement this method
+        return new CoupleValue(left.accept(this), right.accept(this));
     }
 
     @Override
