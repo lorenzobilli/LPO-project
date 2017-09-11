@@ -38,7 +38,7 @@ public class CoupleValue implements Value {
             return false;
         }
         CoupleValue couple = (CoupleValue) object;
-        return firstValue.equals(couple.firstValue) && secondValue.equals(couple.secondValue);
+        return firstValue.equals(couple.getFirstValue()) && secondValue.equals(couple.getSecondValue());
     }
 
     @Override

@@ -14,5 +14,7 @@ import common.Visitor;
  * ASTNode interface
  */
 public interface ASTNode {
+
     <T> T accept(Visitor<T> visitor);
+
 }

@@ -39,7 +39,7 @@ public class CoupleType implements Type {
             return false;
         }
         CoupleType couple = (CoupleType) object;
-        return (firstType.equals(couple.firstType) && secondType.equals(couple.secondType));
+        return (firstType.equals(couple.getFirstType()) && secondType.equals(couple.getSecondType()));
     }
 
     @Override

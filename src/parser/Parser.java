@@ -51,7 +51,7 @@ public class Parser {
     }
 
     private Statement parseStatement() throws ParserException, IOException, ScannerException {
-        switch (tokenizer.getTokenType()) {     //TODO: handle additional statement types (all other keywords)
+        switch (tokenizer.getTokenType()) {
             default:
                 unexpectedTokenError();
             case PRINT:
@@ -171,7 +171,7 @@ public class Parser {
 
     private Expression parseAddAndSubtract() throws IOException, ScannerException, ParserException {
         Expression expression = parseTimesAndFraction();
-        while (tokenizer.getTokenType() == PLUS || tokenizer.getTokenType() == MINUS) {     //TODO: unary op conflict?
+        while (tokenizer.getTokenType() == PLUS || tokenizer.getTokenType() == MINUS) {
             switch (tokenizer.getTokenType()) {
                 case PLUS:
                     tokenizer.next();

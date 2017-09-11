@@ -12,6 +12,7 @@ package parser;
  * ScannerException class
  */
 public class ScannerException extends Exception {
+
     private final String skipped;
 
     public ScannerException() {

@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
  * Scanner class
  */
 public class Scanner implements AutoCloseable {
+
     private final Matcher matcher;
     private final BufferedReader bufferedReader;
     private MatchResult result;
