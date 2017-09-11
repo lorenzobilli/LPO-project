@@ -1,3 +1,11 @@
+/*
+ *  LPO 2016/2017 - Final Project
+ *  Author: Lorenzo Billi (S3930391)
+ *
+ *  File: common.ast.Pair.java
+ *
+ */
+
 package common.ast;
 
 import common.Visitor;

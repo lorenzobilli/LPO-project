@@ -1,3 +1,11 @@
+/*
+ *  LPO 2016/2017 - Final Project
+ *  Author: Lorenzo Billi (S3930391)
+ *
+ *  File: common.ast.More.java
+ *
+ */
+
 package common.ast;
 
 import static java.util.Objects.requireNonNull;

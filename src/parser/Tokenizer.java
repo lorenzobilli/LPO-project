@@ -1,3 +1,11 @@
+/*
+ *  LPO 2016/2017 - Final Project
+ *  Author: Lorenzo Billi (S3930391)
+ *
+ *  File: parser.Tokenizer.java
+ *
+ */
+
 package parser;
 
 import static parser.TokenType.*;
