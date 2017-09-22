@@ -218,6 +218,7 @@ public class TypeChecker implements Visitor<Type> {
 
     @Override
     public Type visitWhileStatement(Expression expression, StatementSequence block) {
+        expression.accept(this).checkEqual(BOOL);
         staticEnvironment.enterScope();
         block.accept(this);
         staticEnvironment.exitScope();
